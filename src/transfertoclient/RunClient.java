@@ -1,6 +1,8 @@
+package transfertoclient;
+
 import java.io.IOException;
 
-public class Main {
+public class RunClient {
     public static void main(String[] args) throws IOException {
         new TransferToClient().sendFile();
     }

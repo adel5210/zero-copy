@@ -1,0 +1,1 @@
+My name is Adel, and here is a zero-copy example
