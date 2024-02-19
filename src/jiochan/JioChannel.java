@@ -7,13 +7,35 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 
 public class JioChannel {
-    public void zeroCopy(final String from, final String to) throws IOException {
+
+    public static void main(String[] args) {
+        System.out.println("Processing Jiochannel ...");
+        final JioChannel channel = new JioChannel();
+        try {
+            if (args.length < 3) {
+                System.out.println("usage: JioChannel <source> <destination> <mode> \n");
+                return;
+            }
+
+            if ("1".equals(args[2])) {
+                channel.copy(args[0], args[1]);
+            } else {
+                channel.zeroCopy(args[0], args[1]);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Complete Jiochannel");
+
+    }
+
+    private void zeroCopy(final String from, final String to) throws IOException {
         FileChannel source = null;
         FileChannel destination = null;
 
         try {
             source = new FileInputStream(from).getChannel();
-            destination = new FileInputStream(to).getChannel();
+            destination = new FileOutputStream(to).getChannel();
             source.transferTo(0, source.size(), destination);
         } finally {
             if (null != source) {
@@ -25,7 +47,7 @@ public class JioChannel {
         }
     }
 
-    public void copy(final String from, final String to) throws IOException {
+    private void copy(final String from, final String to) throws IOException {
         final byte[] data = new byte[8 * 1024];
         FileInputStream fis = null;
         FileOutputStream fos = null;
